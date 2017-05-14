@@ -22,7 +22,10 @@ send = function (data, itemid, inventory) {
                 "Content-Type": "application/json",
                 "Authorization": "Bearer " + data + ""
             },
-            body: inventory,
+            body: {
+                "fulfillment_node_id": "XISNDKSANDSFNCSJKFDNFKJHFJD",
+                "quantity": inventory
+            },
             json: true
         },
 

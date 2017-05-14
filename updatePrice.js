@@ -22,7 +22,9 @@ send = function (data, itemid, price){
                 "Content-Type": "application/json",
                 "Authorization": "Bearer " + data + ""
             },
-            body: price,
+            body: {
+                "price": price
+            },
             json: true
         },
 

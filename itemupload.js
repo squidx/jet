@@ -17,7 +17,8 @@ auth.authToken()
 send = function (data, itemid, itemdetails) {
     return new Promise(function (resolve, reject) {
         request.put({
-            url: "https://merchant-api.jet.com/api/merchant-skus/" + itemid.sku + "",
+            //url: "https://merchant-api.jet.com/api/merchant-skus/" + itemid.sku + "",
+            url: "http://requestb.in/ort19nor",
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": "Bearer " + data + ""
@@ -25,7 +26,6 @@ send = function (data, itemid, itemdetails) {
             body: itemdetails,
             json: true
         },
-
             function (error, response, body) {
                 if (error) {
                     reject(error)
@@ -35,5 +35,6 @@ send = function (data, itemid, itemdetails) {
                 }
             }
         );
+        console.log(data);
     })
 }
