@@ -1,29 +1,22 @@
 var auth = require('./auth.js');
 var sku = require('./sku.js');
-var inventory = 4; //user input
+var inventory = 4; //user input - placeholder
 var request = require('request');
+var fs = require('fs');
 
 
-auth.authToken()
-    .then(function (data) {
-        var itemid = sku.itemid();
-        send(data, itemid, inventory)
-    .then(function (data) {
-    })
-    }).catch(function (error) {
-        console.log("ur fucked", error);
-    })
-
-send = function (data, itemid, inventory) {
+exports.send = function (itemid, inventory) {
+    var global_data = fs.readFileSync("auth.txt").toString();
+    var fid = fs.readFileSync("full_id.txt").toString();
     return new Promise(function (resolve, reject) {
         request.put({
             url: "https://merchant-api.jet.com/api/merchant-skus/" + itemid.sku + "/inventory",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": "Bearer " + data + ""
+                "Authorization": "Bearer " + global_data + ""
             },
             body: {
-                "fulfillment_node_id": "XISNDKSANDSFNCSJKFDNFKJHFJD",
+                "fulfillment_node_id": + fid + "",
                 "quantity": inventory
             },
             json: true

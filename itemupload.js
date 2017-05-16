@@ -2,26 +2,18 @@ var auth = require('./auth.js');
 var id = require('./itemdetails.js');
 var sku = require('./sku.js');
 var request = require('request');
+var fs = require('fs');
 
-auth.authToken()
-    .then(function (data) {
-        var itemid = sku.itemid();
-        var itemdetails = id.itemdetails();
-        send(data, itemid, itemdetails)
-    .then(function (data) {
-    })
-}).catch(function (error) {
-    console.log("ur fucked", error);
-})
-
-send = function (data, itemid, itemdetails) {
+exports.send = function (itemid, itemdetails) {
+    var global_data = fs.readFileSync("auth.txt").toString();
+    var itemid = sku.itemid();
+    var itemdetails = id.itemdetails();
     return new Promise(function (resolve, reject) {
         request.put({
-            //url: "https://merchant-api.jet.com/api/merchant-skus/" + itemid.sku + "",
-            url: "http://requestb.in/ort19nor",
+            url: "https://merchant-api.jet.com/api/merchant-skus/" + itemid.sku + "",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": "Bearer " + data + ""
+                "Authorization": "Bearer " + global_data + ""
             },
             body: itemdetails,
             json: true
@@ -35,6 +27,5 @@ send = function (data, itemid, itemdetails) {
                 }
             }
         );
-        console.log(data);
     })
 }
