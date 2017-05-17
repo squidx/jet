@@ -7,16 +7,16 @@ var fs = require('fs');
 exports.send = function () {
     var itemid = sku.itemid();
     var global_data = fs.readFileSync("auth.txt").toString();
-    var price = 80.00; 
+    var is_archived = true;
     return new Promise(function (resolve, reject) {
         request.put({
-            url: "https://merchant-api.jet.com/api/merchant-skus/" + itemid.sku + "/price",
+            url: "https://merchant-api.jet.com/api/merchant-skus/" + itemid.sku + "/status/archive",
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": "Bearer " + global_data + ""
             },
             body: {
-                "price": price
+                "is_archived": is_archived
             },
             json: true
         },
@@ -31,4 +31,4 @@ exports.send = function () {
             }
         );
     })
-}    
+}
